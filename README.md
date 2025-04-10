@@ -69,6 +69,8 @@ pip install -r requirements.txt
 python app.py
 ```
 
+You will have your own instance of your local sql db created inside the folder named instances in which the db name is called expenses (expenses.db)
+
 Visit the following URL in your browser to interact with the application:
 
 ```
@@ -86,6 +88,8 @@ L7-Informatics-Assignment/
 │   └── index.html         # Basic HTML interface
 │   └── login.html         # Basic HTML interface to login
 │   └── register.html      # Basic HTML interface to register or sign up
+├── utils/
+│   └── email_alerts.py    # Basic SMTP server to send Emails  
 └── README.md              # Project documentation
 ```
 
