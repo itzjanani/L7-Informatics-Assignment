@@ -7,7 +7,7 @@ A Flask-based web application to track daily expenses, manage category-wise budg
 [![Watch the Full Demo](https://raw.githubusercontent.com/itzjanani/L7-Informatics-Assignment/refs/heads/main/demo/Overall%20Flow%20of%20the%20Website%20(1).png)](https://youtu.be/mKalzQkTQmY)
 
 ### 🔹 Email Alert Functionality  
-[![Watch Email Alert Demo](https://img.youtube.com/vi/VIDEO_ID_2/0.jpg)](https://youtu.be/Wf00dvAKbz0)
+[![Watch Email Alert Demo](https://raw.githubusercontent.com/itzjanani/L7-Informatics-Assignment/refs/heads/main/demo/email-alert.png)](https://youtu.be/Wf00dvAKbz0)
 
 ## Table of Contents
 
