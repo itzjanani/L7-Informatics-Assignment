@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker</title>
+</head>
+<body>
+  <h2>Create Group</h2>
+  <input id="gname" placeholder="Group Name">
+  <button onclick="createGroup()">Create Group</button>
+
+  <h2>Add User</h2>
+  <input id="uname" placeholder="User Name">
+  <input id="uemail" placeholder="Email">
+  <input id="upass" placeholder="Password" type="password">
+  <button onclick="addUser()">Add User</button>
+
+  <h2>Add Category</h2>
+  <input id="cname" placeholder="Category Name">
+  <button onclick="addCategory()">Add Category</button>
+
+  <h2>Add User to Group</h2>
+  <input id="membername" placeholder="User Name">
+  <input id="groupname" placeholder="Group Name">
+  <button onclick="addMember()">Add to Group</button>
+
+  <h2>Add Group Expense</h2>
+  <input id="gxgroup" placeholder="Group Name">
+  <input id="gxcat" placeholder="Category Name">
+  <input id="gxamt" placeholder="Amount">
+  <input id="gxdesc" placeholder="Description">
+  <input id="gxdate" type="date">
+  <button onclick="addGroupExpense()">Split Expense</button>
+
+  <h2>Add Individual Expense</h2>
+  <input id="exuser" placeholder="User Name">
+  <input id="excat" placeholder="Category Name">
+  <input id="examt" placeholder="Amount">
+  <input id="exdesc" placeholder="Description">
+  <input id="exdate" type="date">
+  <button onclick="addIndividualExpense()">Add Expense</button>
+
+  <h2>Set Monthly Budget</h2>
+  <input id="buser" placeholder="User Name">
+  <input id="bcat" placeholder="Category Name">
+  <input id="bmonth" placeholder="Month (YYYY-MM)">
+  <input id="bamt" placeholder="Budget Amount">
+  <button onclick="setBudget()">Set Budget</button>
+
+  <hr>
+
+  <h3>All Users</h3>
+  <ul>
+    {% for u in users %}
+      <li>ID: {{ u.id }} | {{ u.name }} | {{ u.email }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>All Categories</h3>
+  <ul>
+    {% for c in categories %}
+      <li>ID: {{ c.id }} | {{ c.name }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>All Expenses</h3>
+  <ul>
+    {% for e in expenses %}
+      <li>ID: {{ e.id }} | User ID: {{ e.user_id }} | Cat ID: {{ e.category_id }} | ₹{{ e.amount }} | {{ e.description }} | {{ e.date.date() }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>All Groups</h3>
+  <ul>
+    {% for g in groups %}
+      <li>ID: {{ g.id }} | {{ g.name }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Group Members</h3>
+  <ul>
+    {% for m in members %}
+      <li>Group ID: {{ m.group_id }} | User ID: {{ m.user_id }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Group Expenses</h3>
+  <ul>
+    {% for ge in gexpenses %}
+      <li>ID: {{ ge.id }} | Group ID: {{ ge.group_id }} | ₹{{ ge.amount }} | {{ ge.description }} | Cat ID: {{ ge.category_id }} | {{ ge.date.date() }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Budgets</h3>
+  <ul>
+    {% for b in budgets %}
+      <li>User ID: {{ b.user_id }} | Category ID: {{ b.category_id }} | Month: {{ b.month }} | ₹{{ b.amount }}</li>
+    {% endfor %}
+  </ul>
+
+  <script>
+    async function post(url, data) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const out = await res.json();
+      alert(out.message || out.error || JSON.stringify(out));
+      location.reload();
+    }
+
+    function createGroup() {
+      post('/group', { name: document.getElementById('gname').value });
+    }
+
+    function addUser() {
+      post('/user', {
+        name: document.getElementById('uname').value,
+        email: document.getElementById('uemail').value,
+        password: document.getElementById('upass').value
+      });
+    }
+
+    function addCategory() {
+      post('/category', { name: document.getElementById('cname').value });
+    }
+
+    async function addMember() {
+      const res = await fetch('/resolve-ids', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_name: document.getElementById('membername').value,
+          group_name: document.getElementById('groupname').value
+        })
+      });
+      const ids = await res.json();
+      if (!ids.user_id || !ids.group_id) {
+        alert('Invalid user or group name'); return;
+      }
+      post('/group/member', {
+        user_id: ids.user_id,
+        group_id: ids.group_id
+      });
+    }
+
+    async function addGroupExpense() {
+      const date = document.getElementById('gxdate').value;
+      const payload = {
+        group_name: document.getElementById('gxgroup').value,
+        category_name: document.getElementById('gxcat').value,
+        amount: document.getElementById('gxamt').value,
+        description: document.getElementById('gxdesc').value
+      };
+      if (date) payload.date = date;
+      post('/group/expense', payload);
+    }
+
+    async function addIndividualExpense() {
+      const res = await fetch('/resolve-ids', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_name: document.getElementById('exuser').value,
+          category_name: document.getElementById('excat').value
+        })
+      });
+      const ids = await res.json();
+      if (!ids.user_id || !ids.category_id) {
+        alert('Invalid user or category name'); return;
+      }
+
+      const payload = {
+        user_id: ids.user_id,
+        category_id: ids.category_id,
+        amount: document.getElementById('examt').value,
+        description: document.getElementById('exdesc').value,
+      };
+
+      const date = document.getElementById('exdate').value;
+      if (date) payload.date = date;
+
+      post('/expense', payload);
+    }
+
+    async function setBudget() {
+      const res = await fetch('/resolve-ids', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_name: document.getElementById('buser').value,
+          category_name: document.getElementById('bcat').value
+        })
+      });
+      const ids = await res.json();
+      if (!ids.user_id || !ids.category_id) {
+        alert('Invalid user or category name'); return;
+      }
+
+      post('/budget', {
+        user_id: ids.user_id,
+        category_id: ids.category_id,
+        month: document.getElementById('bmonth').value,
+        amount: document.getElementById('bamt').value
+      });
+    }
+  </script>
+</body>
+</html>
