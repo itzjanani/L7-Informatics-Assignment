@@ -15,12 +15,7 @@ A Flask-based web application to track daily expenses, manage category-wise budg
 - [Repository Setup & Execution](#repository-setup--execution)
 - [Folder Structure](#folder-structure)
 - [Requirements](#requirements)
-- [Application Features](#application-features)
-- [Edge Case Handling](#edge-case-handling)
-- [Coding Standards](#coding-standards)
-- [Evaluation Notes](#evaluation-notes)
 - [Demo Walkthrough](#demo-walkthrough)
-- [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
 
 ## Project Overview
@@ -30,9 +25,10 @@ This application enables individual users to:
 - Log daily expenses with category and date.
 - Set category-wise monthly budgets.
 - Automatically track spending against budgets.
-- View monthly summary reports.
-- Handle common edge cases (e.g., invalid inputs, budget breaches).
+- Send Email alerts if expenses > 90% monthly allocated budget.
+- Handle common edge cases (e.g., invalid inputs, user not found, and so on).
 - Focus on backend logic using Python and Flask (minimal front-end).
+- Create groups and split group expenses like splitwise.
 
 ## Repository Setup & Execution
 
@@ -107,37 +103,6 @@ To update or regenerate this file:
 pip freeze > requirements.txt
 ```
 
-## Application Features
-
-- Expense Logging: Input expense amount, category, and date.
-- Budget Management: Set and manage monthly budgets per category.
-- Monthly Reports: Summarize spending per category vs. budget.
-- Spending Alerts: Notify when spending exceeds budget limits.
-- Minimal UI: Clean and functional HTML interface.
-
-## Edge Case Handling
-
-- Validation for negative or zero expense amounts.
-- Error messages for missing or invalid form inputs.
-- Duplicate entries handled and aggregated correctly.
-- Alerts when spending goes over budget.
-- Graceful handling of 404 and other route errors.
-
-## Coding Standards
-
-- Adheres to Python's PEP8 standards.
-- Clean and modular Flask code.
-- Functions are named clearly with comments where needed.
-- Backend-focused with logically structured routes and validations.
-
-## Evaluation Notes
-
-- This is a public GitHub repository as required by the L7 Informatics assignment.
-- Evaluators can simply clone the repo and follow this README to run the app.
-- Focus has been placed on backend functionality and edge case handling.
-- Minimal time was spent on CSS and front-end design, as per instructions.
-- All key features and validations are documented above for easy scoring.
-
 ## Demo Walkthrough
 
 - Open the browser and go to `http://127.0.0.1:5000/` after running the app.
@@ -147,14 +112,6 @@ pip freeze > requirements.txt
 - Add group expenses by creating a group and adding members, then log shared expenses to see automatic splitting.
 - View all expenses and budgets in structured tables on the dashboard.
 
-## Future Enhancements
-
-- Add password encryption and secure session management.
-- Introduce email notifications for low budget alerts.
-- Add chart visualizations (e.g., pie and bar charts) for spending insights.
-- Allow exporting data to CSV or PDF reports.
-- Improve mobile responsiveness and styling.
-
 ## Contributing
 
-This repository is maintained by Janani as part of the L7 Informatics Internship. While direct contributions are not open, suggestions and feedback are welcome via GitHub Issues.
+This repository is maintained by Janani as part of the L7 Informatics Internship assignment.
