@@ -84,6 +84,8 @@ L7-Informatics-Assignment/
 ├── requirements.txt       # Required Python packages
 ├── templates/
 │   └── index.html         # Basic HTML interface
+│   └── login.html         # Basic HTML interface to login
+│   └── register.html      # Basic HTML interface to register or sign up
 └── README.md              # Project documentation
 ```
 
