@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register - Expense Tracker</title>
+</head>
+<body>
+  <h2>Register</h2>
+  <input id="name" placeholder="Username" required>
+  <input id="email" type="email" placeholder="Email" required>
+  <input id="password" type="password" placeholder="Password" required>
+  <button onclick="register()">Register</button>
+
+  <p>Already have an account? <a href="/login">Login</a></p>
+
+  <script>
+    async function register() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const res = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const out = await res.json();
+
+      if (res.ok) {
+        alert(out.message || 'Registered successfully');
+        window.location.href = '/login';  
+      } else {
+        alert(out.message || 'Registration failed');
+      }
+    }
+  </script>
+</body>
+</html>

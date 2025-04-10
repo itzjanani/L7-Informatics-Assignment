@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - Expense Tracker</title>
+</head>
+<body>
+  <h2>Login</h2>
+  <input id="email" type="email" placeholder="Email" required>
+  <input id="password" type="password" placeholder="Password" required>
+  <button onclick="login()">Login</button>
+
+  <p>Don't have an account? <a href="/register">Register</a></p>
+
+  <script>
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const res = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const out = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem('userToken', out.id); 
+        localStorage.setItem('userName', out.name); 
+        alert(out.message || 'Login successful');
+        window.location.href = '/';
+      } else {
+        alert(out.message || 'Login failed');
+      }
+    }
+  </script>
+</body>
+</html>
