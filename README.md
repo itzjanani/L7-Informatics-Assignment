@@ -4,7 +4,7 @@
 A Flask-based web application to track daily expenses, manage category-wise budgets, and generate monthly financial reports. This repository is part of the L7 Informatics Internship Assignment.
 
 ### 🔹 Full Application Walkthrough  
-[![Watch the Full Demo](https://img.youtube.com/vi/VIDEO_ID_1/0.jpg)](https://youtu.be/mKalzQkTQmY)
+[![Watch the Full Demo]([https://img.youtube.com/vi/VIDEO_ID_1/0.jpg](https://raw.githubusercontent.com/itzjanani/L7-Informatics-Assignment/refs/heads/main/demo/Overall%20Flow%20of%20the%20Website.png))](https://youtu.be/mKalzQkTQmY)
 
 ### 🔹 Email Alert Functionality  
 [![Watch Email Alert Demo](https://img.youtube.com/vi/VIDEO_ID_2/0.jpg)](https://youtu.be/Wf00dvAKbz0)
