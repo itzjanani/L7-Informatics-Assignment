@@ -5,7 +5,8 @@ from sqlalchemy import extract
 from utils.email_alert import send_budget_alert_email
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://neondb_owner:npg_NxfadLC1pY9j@ep-ancient-art-a5amvpbq-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://neondb_owner:npg_1aHnCSBph0EL@ep-purple-lake-a5mdfrwl-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -162,7 +163,7 @@ def add_expense():
 
     if budget:
         budget.remaining -= float(data['amount'])
-        
+        print(budget)
         if budget.amount * 0.1 >= budget.remaining:
             user = User.query.get(data['user_id'])  
             if user:
